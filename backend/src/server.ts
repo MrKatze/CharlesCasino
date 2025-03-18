@@ -19,7 +19,13 @@ app.use('/api/ingresos', ingresoRoutes);
 app.use('/api/egresos', egresoRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, async () => {
-  console.log(`🔥 Servidor corriendo en http://localhost:${PORT}`);
-});
 
+// Solo inicia el servidor si el archivo se ejecuta directamente
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🔥 Servidor corriendo en http://localhost:${PORT}`);
+  });
+}
+
+// Exporta la instancia de Express
+export default app;

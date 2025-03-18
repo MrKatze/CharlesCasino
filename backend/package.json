@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require ts-node/register tests/**/*.{js,ts} --timeout 10000",
     "start": "node dist/server.js",
     "build": "tsc",
     "dev": "nodemon --ext ts --exec ts-node src/server.ts"
@@ -23,7 +23,11 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.10",
+    "chai": "^5.2.0",
+    "chai-http": "^5.1.1",
+    "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
+    "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   }
