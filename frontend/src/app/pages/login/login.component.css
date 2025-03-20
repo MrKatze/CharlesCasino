@@ -1,27 +1,134 @@
-.container {
-    margin-top: 5%;
-  }
-  
-  .card {
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .input-field input {
-    font-size: 16px !important;
-  }
-  
-  .input-field label {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .input-field i {
-    font-size: 22px;
-  }
-  
-  .btn {
-    width: 100%;
-    text-transform: uppercase;
-  }
-  
+body {
+  background-color: #3B3B3B;
+  font-family: 'Roboto Mono', monospace;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+.login-container {
+  background-color: #3B3B3B;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  width: 90%;
+  max-width: 500px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.imagen-container {
+  border: 4px solid #FFBF00;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+h2, p {
+  color: gold;
+}
+
+.input-field {
+  position: relative;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-field input {
+  width: 80%;
+  padding: 10px;
+  padding-left: 35px;
+  border: none;
+  border-bottom: 2px solid gold;
+  border-radius: 0;
+  font-size: 16px;
+  color: white;
+  background-color: transparent;
+}
+
+.input-field input::placeholder {
+  color: #bbb;
+}
+
+.input-field .material-icons {
+  position: absolute;
+  left: 5%;
+  color: #bbb;
+}
+
+.input-field input:focus {
+  border-bottom-color: #007bff;
+  outline: none;
+}
+ 
+ .btn {
+    background: linear-gradient(45deg, #FFBF00, #007bff);
+    color: white;
+    border-radius: 20px;
+    padding: 10px 25px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content; /* El ancho se ajusta al contenido */
+}
+
+.btn i.material-icons {
+    margin-left: 8px;
+    font-size: 20px;
+}
+
+.btn span {
+    display: inline-block;
+    transform: translateY(-1px); /* Aquí subimos ligeramente el texto */
+}
+
+
+.btn:hover {
+  background: linear-gradient(45deg, #007bff, #FFBF00);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+.register-link {
+  color: #aaa;
+  text-decoration: none;
+  display: block;
+  margin-top: 15px;
+  transition: color 0.3s;
+}
+
+.register-link:hover {
+  color: #FFBF00;
+}
+
+.red-text {
+  color: #ff4444;
+  font-size: 14px;
+}
+.register-link {
+  cursor: pointer; /* Cursor adecuado para clic */
+  text-decoration: underline; /* Para indicar visualmente que es clickeable */
+  color: hsl(49, 81%, 75%); /* Opcional: Color para resaltar que es link */
+}
+
+.register-link:hover {
+  color: #FFBF00; /* Opcional: Color al pasar el mouse para dar efecto visual */
+}

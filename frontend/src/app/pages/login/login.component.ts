@@ -24,6 +24,10 @@ export class LoginComponent {
     });
   }
 
+  irARegistro() {
+    this.router.navigate(['/register']);
+  }
+
   login() {
     if (this.loginForm.valid) {
       // Enviar los datos al backend
