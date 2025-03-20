@@ -1,0 +1,14 @@
+.dashboard-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .dashboard-container h2 {
+    font-size: 2rem;
+    color: #004d40;
+  }
+  
+  .dashboard-container p {
+    font-size: 1.2rem;
+  }
+  
