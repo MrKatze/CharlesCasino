@@ -1,43 +1,46 @@
-<div class="container">
-  <div class="row">
-    <div class="col s12 m8 offset-m2 l6 offset-l3">
-      <div class="card">
-        <div class="card-content center-align">
-          <h4 class="teal-text">🎰 CharlesCasino</h4>
-          <span class="card-title">Iniciar Sesión</span>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles/styles.css">
+<meta charset="UTF-8">
 
-          <!-- Formulario -->
-          <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <!-- Usuario -->
-            <div class="input-field">
-              <i class="material-icons prefix">account_circle</i>
-              <input id="username" type="text" formControlName="username" required />
-              <label for="username">Usuario</label>
-            </div>
+<body>
 
-            <!-- Contraseña -->
-            <div class="input-field">
-              <i class="material-icons prefix">lock</i>
-              <input id="password" type="password" formControlName="password" required />
-              <label for="password">Contraseña</label>
-            </div>
-
-            <!-- Botón de Ingreso -->
-            <button type="submit" class="btn waves-effect waves-light teal darken-3" [disabled]="loginForm.invalid">
-              Ingresar
-              <i class="material-icons right">send</i>
-            </button>
-
-            <!-- Mensaje de Error -->
-            <p *ngIf="errorMessage" class="red-text">{{ errorMessage }}</p>
-          </form>
-        </div>
-
-        <!-- Pie de Página -->
-        <div class="card-action center-align">
-          <a href="#" class="blue-text text-darken-2">¿Olvidaste tu contraseña?</a>
-        </div>
-      </div>
+<div class="login-container">
+  <div class="imagen-container">
+    <img [src]="LogoURL" alt="Logo">
+  </div>
+  <h2>¡Bienvenido de nuevo a Charles Casino!</h2>
+  <p>Inicia sesión con tu nombre de Usuario</p>
+  
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <!-- Usuario -->
+    <div class="input-field">
+      <i class="material-icons prefix">account_circle</i>
+      <input id="username" type="text" formControlName="username" required />
+      <label for="username">Usuario</label>
     </div>
+
+    <!-- Contraseña -->
+    <div class="input-field">
+      <i class="material-icons prefix">lock</i>
+      <input id="password" type="password" formControlName="password" required />
+      <label for="password">Contraseña</label>
+    </div>
+
+    <!-- Botón de Ingreso -->
+    <button type="submit" class="btn waves-effect waves-light teal darken-3" [disabled]="loginForm.invalid">
+      Ingresar
+      <i class="material-icons right">send</i>
+    </button>
+
+    <!-- Mensaje de Error -->
+    <p *ngIf="errorMessage" class="red-text">{{ errorMessage }}</p>
+  </form>
+
+  <!-- Pie de Página -->
+  <div class="card-action center-align">
+    <a routerLink="/register" class="blue-text text-darken-2">Registrarse</a>
   </div>
 </div>
+
+</body>
