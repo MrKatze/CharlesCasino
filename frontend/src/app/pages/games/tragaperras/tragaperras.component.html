@@ -1,0 +1,6 @@
+<div class="slot-machine">
+    <div class="slot-container" *ngFor="let reel of reels; let i = index">
+      <div class="slot-reel" [ngStyle]="{'transform': 'translateY(' + reel.positionY + 'px)', 'transition': reel.transition}"></div>
+    </div>
+  </div>
+  <button (click)="spin()">Spin</button>

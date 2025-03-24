@@ -1,0 +1,23 @@
+
+.slot-machine {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.slot-container {
+  width: 100px; /* Aumentar tamaño del contenedor */
+  height: 100px; /* Ajustar altura para mayor visibilidad */
+  overflow: hidden;
+  border: 2px solid black;
+  padding: auto;
+}
+.slot-reel {
+  width: calc(61*10);
+  height: calc(38px * 8 * 10);
+  background: url('../../../../assets/tragaperras/fruits.png') repeat-y;
+  background-position: center top;
+}
+button {
+  display: block;
+  margin: 10px auto;
+}
