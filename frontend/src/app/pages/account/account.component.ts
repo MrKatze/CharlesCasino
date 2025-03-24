@@ -3,23 +3,20 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-account',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.css']
 })
-export class DashboardComponent {
+export class AccountComponent {
+  nombreUsuario: string = 'Usuario de Ejemplo';
+  correoUsuario: string = 'usuario@example.com';
 
   constructor(private router: Router) { }
 
-  irAPerfil() {
-    this.router.navigate(['/account']);
-  }
-
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    window.location.href = '/login';
   }
-
 }

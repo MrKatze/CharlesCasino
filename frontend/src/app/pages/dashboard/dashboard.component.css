@@ -1,14 +1,143 @@
-.dashboard-container {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .dashboard-container h2 {
-    font-size: 2rem;
-    color: #004d40;
-  }
-  
-  .dashboard-container p {
-    font-size: 1.2rem;
-  }
-  
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #3B3B3B; /* Fondo base oscuro */
+}
+
+/* Contenedor sidebar y contenido */
+.sidebar-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #3B3B3B; /* Asegura fondo uniforme en todo */
+}
+
+.sidebar {
+  width: 75px;
+  background-color: #333;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+.sidebar:hover {
+  width: 250px;
+}
+
+/* Enlaces del sidebar */
+.sidebar a {
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 15px;
+  text-decoration: none;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #575757;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+/* Íconos del sidebar */
+.sidebar .icon {
+  min-width: 50px;
+  text-align: center;
+  font-size: 24px;
+  color: white;
+  margin-right: 10px;
+}
+
+.sidebar a .text {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease;
+}
+
+.sidebar:hover a .text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Logo central */
+.imagen-logo-container {
+  border: 4px solid #FFBF00; 
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; 
+  width: 120px; 
+  height: 120px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.imagen-logo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Tarjetas para juegos */
+.card-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.card {
+  width: 250px;
+  height: 350px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+.card img {
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+}
+
+.card .title {
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  background-color: #3498db;
+  color: white;
+}
+
+/* Texto inicialmente oculto */
+.sidebar a .text {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease;
+}
+
+/* Mostrar texto al expandir el sidebar */
+.sidebar:hover a .text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sidebar-container {
+  display: flex;
+  height: 100vh;
+  background-color: #3B3B3B; /* Asegura fondo uniforme */
+}
+
+.content {
+  flex: 1; /* Ocupa el resto del espacio */
+  padding: 20px;
+  background-color: #3B3B3B; /* Asegura fondo del contenido */
+}

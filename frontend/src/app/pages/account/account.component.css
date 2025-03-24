@@ -1,0 +1,70 @@
+/* perfil.component.css */
+
+body {
+    background-color: #3B3B3B;
+    font-family: 'Oswald', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .perfil-container {
+    background-color: #333;
+    color: gold;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    width: 60%;
+    margin: 3rem auto;
+    text-align: center;
+  }
+  
+  .perfil-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #FFBF00;
+    margin-bottom: 1rem;
+  }
+  
+  .perfil-info h2 {
+    font-size: 28px;
+    margin: 0.5rem 0;
+    color: gold;
+  }
+  
+  .perfil-info p {
+    font-size: 18px;
+    margin: 0.3rem 0;
+    color: white;
+  }
+  
+  .boton-editar {
+    margin-top: 1.5rem;
+    background: linear-gradient(to right, gold, #3498db);
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .boton-editar:hover {
+    background-color: #FFBF00;
+    color: white;
+  }
+
+  .sidebar-container {
+    display: flex;
+    height: 100vh;
+    background-color: #3B3B3B;
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #3B3B3B;
+  }
+  

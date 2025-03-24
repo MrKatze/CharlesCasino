@@ -29,6 +29,7 @@
             "styles": [
               "node_modules/materialize-css/dist/css/materialize.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+               "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": [
