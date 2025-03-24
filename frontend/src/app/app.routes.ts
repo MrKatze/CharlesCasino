@@ -7,8 +7,10 @@ import { RuletaComponent } from './pages/games/ruleta/ruleta.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'register', component: RegisterComponent },
+  { path: 'dashboard', component: DashboardComponent }, 
+  { path: 'account', component: AccountComponent }, 
   { path: 'games/tragaperras', pathMatch: 'full', component:TragaperrasComponent },
   { path: 'games/ruleta', pathMatch: 'full', component:RuletaComponent },
-
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
