@@ -3,9 +3,13 @@ import { getUsuarios, createUsuario, login } from '../controllers/usuario.contro
 
 const router = Router();
 
-router.get('/', getUsuarios);
-router.post('/', createUsuario);
-router.post('/login', login);
+// Ruta para obtener usuarios
+router.get('/usuarios', getUsuarios);
 
+// Ruta para crear un nuevo usuario
+router.post('/createUsuario', createUsuario);
+
+// Ruta para iniciar sesión
+router.post('/login', login);
 
 export default router;
