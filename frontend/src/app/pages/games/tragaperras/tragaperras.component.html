@@ -1,6 +1,38 @@
-<div class="slot-machine">
-    <div class="slot-container" *ngFor="let reel of reels; let i = index">
-      <div class="slot-reel" [ngStyle]="{'transform': 'translateY(' + reel.positionY + 'px)', 'transition': reel.transition}"></div>
-    </div>
+<div class="sidebar-container">
+  <div class="sidebar">
+    <a routerLink="/dashboard">
+      <span class="icon"><i class="fas fa-home"></i></span>
+      <span class="text">Principal</span>
+    </a>
+    <a (click)="irAPerfil()">
+      <span class="icon"><i class="fa-solid fa-user"></i></span>
+      <span class="text">Perfil</span>
+    </a>
+    <a (click)="irTiendaPuntos()">
+      <span class="icon"><i class="fa-solid fa-shop"></i></span>
+      <span class="text">Tienda de Puntos</span>
+    </a>
+    <a routerLink="/historial">
+      <span class="icon"><i class="fa-solid fa-history"></i></span>
+      <span class="text">Historial</span>
+    </a>  
+    <a (click)="logout()">
+      <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+      <span class="text">Cerrar Sesión</span>
+    </a>
   </div>
-  <button (click)="spin()">Spin</button>
+
+  <div class="content tragaperras-content">
+    <h2 class="titulo-slot">🎰 Tragamonedas 🎰</h2>
+
+    <div class="slot-machine">
+      <div class="slot-container" *ngFor="let reel of reels; let i = index">
+        <div class="slot-reel" [ngStyle]="{'transform': 'translateY(' + 
+        reel.positionY + 'px)', 
+        'transition': reel.transition}"></div>
+      </div>
+    </div>
+
+    <button class="spin-button" (click)="spin()">GIRAR</button>
+  </div>
+</div>
