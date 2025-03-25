@@ -14,10 +14,7 @@ export const getUsuarios = async (req: Request, res: Response): Promise<void> =>
 
 export const createUsuario = async (req: Request, res: Response): Promise<void> => {
   try {
-    req.body.id_rol = 2;
-    req.body.puntos = 0;
     const { id_rol, puntos, username, correo, password }: Usuario = req.body;
-    console.log(id_rol, puntos, username, correo, password);
     const [result] = await pool.query(
       'INSERT INTO Usuario (id_rol, puntos, username, correo, password) VALUES (?, ?, ?, ?, ?)',
       [id_rol, puntos, username, correo, password]
