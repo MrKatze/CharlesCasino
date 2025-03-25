@@ -30,7 +30,7 @@ describe('Pruebas del servicio getUsuarios', () => {
 
     // Prueba del servicio getUsuarios
     it('Debe devolver la lista de usuarios correctamente', async () => {
-        const response = await supertest(server).get('/api/usuarios'); // Solicita el servicio getUsuarios
+        const response = await supertest(server).get('/api/usuario/usuarios'); // Solicita el servicio getUsuarios
         //console.log('Usuarios obtenidos del servicio:', response.body); // Muestra los usuarios en la consola
 
         expect(response.status).to.equal(200); // Verifica el código de estado de la respuesta
