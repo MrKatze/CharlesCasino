@@ -25,15 +25,22 @@
     </div>
 
     <div class="card-container">
+
       <div class="card" routerLink="/blackjack">
-        <img src="assets/images/blackjack.png" alt="Black Jack" />
-        <div class="title">Black Jack</div>
+        <img src="assets/images/blackjack.jpg" alt="Black Jack" />
+        <div class="title">BLACK JACK</div>
       </div>
 
-      <div class="card" routerLink="/ruleta">
-        <img src="assets/images/ruleta.jpeg" alt="Ruleta" />
-        <div class="title">Ruleta</div>
+      <div class="card" (click)="irRuleta()">
+        <img src="assets/images/ruleta.jpg" alt="Ruleta" />
+        <div class="title">RULETA</div>
       </div>
+
+      <div class="card" (click)="irTragaperras()">
+        <img src="assets/images/tragaperras.jpg" alt="Tragaperras" />
+        <div class="title">TRAGAPERRAS</div>
+      </div>
+
     </div>
   </div>
 </div>
