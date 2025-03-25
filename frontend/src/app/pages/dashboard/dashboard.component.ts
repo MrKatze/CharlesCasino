@@ -17,6 +17,14 @@ export class DashboardComponent {
     this.router.navigate(['/account']);
   }
 
+  irTragaperras() {
+    this.router.navigate(['/games/tragaperras']);
+  }
+
+  irRuleta() {
+    this.router.navigate(['/games/ruleta']);
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
