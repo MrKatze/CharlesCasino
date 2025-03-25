@@ -15,6 +15,18 @@ export class AccountComponent {
 
   constructor(private router: Router) { }
 
+  goToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+  
+  goToPerfil() {
+    this.router.navigate(['/perfil']);
+  }
+  
+  goToHistorial() {
+    this.router.navigate(['/historial']);
+  }
+
   logout() {
     localStorage.removeItem('token');
     window.location.href = '/login';
