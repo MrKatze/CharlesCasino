@@ -32,13 +32,9 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       // Enviar los datos al backend
       this.http.post('http://localhost:3000/api/usuario/login', this.loginForm.value).subscribe({
-        next: (response: any) => { // Especifica el tipo 'any' para acceder a las propiedades del objeto
+        next: (response) => {
           console.log('Login exitoso', response);
-          
-          // Almacenar el token y el id_usuario en el localStorage
-          localStorage.setItem('token', 'fake-token'); // Puedes almacenar un token real
-          localStorage.setItem('id_usuario', response.id_usuario); // Guarda el id_usuario del response
-          
+          localStorage.setItem('token', 'fake-token'); // Puedes almacenar un token real en vez de 'fake-token'
           this.router.navigate(['/dashboard']); // Redirigir al dashboard después del login
         },
         error: (error) => {
