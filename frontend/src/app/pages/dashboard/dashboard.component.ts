@@ -17,10 +17,6 @@ export class DashboardComponent {
     this.router.navigate(['/account']);
   }
 
-  irABlackJack() {
-    this.router.navigate(['/games/blackjack']);
-  }
-
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);

@@ -18,8 +18,8 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/usuario', usuarioRoutes);
-app.use('/api/ingresos/', ingresoRoutes);
-app.use('/api/egresos/', egresoRoutes);
+app.use('/api', ingresoRoutes);
+app.use('/api', egresoRoutes);
 
 const PORT = process.env.PORT || 3000;
 
