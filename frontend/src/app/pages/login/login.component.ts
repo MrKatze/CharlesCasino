@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-login',
@@ -32,9 +33,9 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       // Enviar los datos al backend
       this.http.post('http://localhost:3000/api/usuario/login', this.loginForm.value).subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log('Login exitoso', response);
-          localStorage.setItem('token', 'fake-token'); // Puedes almacenar un token real en vez de 'fake-token'
+          localStorage.setItem("id_usuario", response.id_usuario); // Guardar el id del usuario en el localStorage
           this.router.navigate(['/dashboard']); // Redirigir al dashboard después del login
         },
         error: (error) => {

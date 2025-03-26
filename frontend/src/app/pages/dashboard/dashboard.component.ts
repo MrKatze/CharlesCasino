@@ -25,6 +25,10 @@ export class DashboardComponent {
     this.router.navigate(['/games/ruleta']);
   }
 
+  irTiendaPuntos() {
+    this.router.navigate(['/points_shop']);
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
