@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BlackJackService } from '../../../services/blackjack.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { EgresosService } from '../../../services/egresos.service';
+import { IngresosService } from '../../../services/ingresos.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,6 +19,7 @@ export class BlackJackComponent implements OnInit {
     private blackJackService: BlackJackService, 
     private usuariosService: UsuariosService,
     private egresosService: EgresosService,
+    private ingresosService: IngresosService,
     private router: Router
   ) {}
 
@@ -30,6 +32,9 @@ export class BlackJackComponent implements OnInit {
   mostrarModal: boolean = true;
   montoApuesta: number = 0;
   errorApuesta: string = '';
+  procesando: boolean = false;
+  mensajeResultado: string = '';
+  mostrarResultado: boolean = false; // Controla la visibilidad del modal de resultado
 
   ngOnInit(): void {
     this.cargarPuntosUsuario();
@@ -73,27 +78,26 @@ export class BlackJackComponent implements OnInit {
 
   iniciarJuego(): void {
     if (!this.validarApuesta()) return;
-
+  
     const userId = localStorage.getItem('id_usuario');
     if (!userId) {
       this.errorApuesta = 'Usuario no identificado';
       return;
     }
-
+  
     const egresoData = {
       id_usuario: parseInt(userId, 10),
       monto: this.montoApuesta,
       metodo: 'apuesta_blackjack',
       fecha: new Date().toISOString().slice(0, 19).replace('T', ' ')
     };
-
+  
     this.egresosService.createEgreso(egresoData).subscribe({
       next: () => {
         this.puntosBalance -= this.montoApuesta;
-        this.mostrarModal = false;
+        this.mostrarModal = false; // Ocultar el modal
         this.blackJackService.iniciarJuego();
         this.actualizarEstadoDesdeServicio();
-        this.nuevoJuego();
       },
       error: (error) => {
         console.error('Error al registrar el egreso:', error);
@@ -102,7 +106,6 @@ export class BlackJackComponent implements OnInit {
     });
   }
 
-  procesando: boolean = false;
 
   pedirCarta(): void {
     if (!this.juegoTerminado && !this.procesando) {
@@ -129,36 +132,126 @@ export class BlackJackComponent implements OnInit {
   
 
   detener(): void {
+    this.procesando = false;
+    this.finalizarJuego();
+    
     if (!this.juegoTerminado) {
       this.juegoTerminado = true;
-      this.finalizarJuego();
+      
     }
   }
   
   private finalizarJuego(): void {
-    this.blackJackService.turnoComputadora();
-    this.determinarGanador();
+    const resultadoComputadora = this.blackJackService.turnoComputadora();
+    this.puntosComputadora = resultadoComputadora.puntos;
+    this.cartasComputadora = resultadoComputadora.cartas;
+    const ganador = this.determinarGanador(this.puntosJuego, this.puntosComputadora); // Determinar el ganador
     this.actualizarEstadoDesdeServicio();
-    
-    // Aquí puedes agregar lógica adicional para determinar el ganador
+
+    // Mostrar mensaje de resultado
+    if (ganador === 'jugador') {
+      this.mensajeResultado = '¡Felicidades! Ganaste el juego.';
+
+      const userId = localStorage.getItem('id_usuario');
+      if (!userId) {
+        this.errorApuesta = 'Usuario no identificado';
+        return;
+      }
+
+      const ingresoData = {
+        id_usuario: parseInt(userId, 10),
+        monto: this.montoApuesta * 2, // Ganancia del jugador
+        metodo: 'apuesta_blackjack',
+        fecha: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      };
+
+      this.ingresosService.createIngreso(ingresoData).subscribe({
+        next: () => {
+          this.puntosBalance += ingresoData.monto; // Actualizar balance del jugador
+        },
+        error: (error) => {
+          console.error('Error al registrar el ingreso:', error);
+          this.errorApuesta = 'Error al procesar la ganancia';
+        }
+      });
+
+    } else if (ganador === 'computadora') {
+      this.mensajeResultado = 'Lo siento, perdiste contra la computadora.';
+      // No se realiza ningún ingreso ni modificación del balance en este caso
+
+    } else if (ganador === 'empate') {
+      this.mensajeResultado = 'Es un empate.';
+
+      const userId = localStorage.getItem('id_usuario');
+      if (!userId) {
+        this.errorApuesta = 'Usuario no identificado';
+        return;
+      }
+
+      const ingresoData = {
+        id_usuario: parseInt(userId, 10),
+        monto: this.montoApuesta, // Devolver la apuesta al jugador
+        metodo: 'apuesta_blackjack_empate',
+        fecha: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      };
+
+      this.ingresosService.createIngreso(ingresoData).subscribe({
+        next: () => {
+          this.puntosBalance += ingresoData.monto; // Devolver la apuesta al balance
+        },
+        error: (error) => {
+          console.error('Error al registrar el ingreso por empate:', error);
+          this.errorApuesta = 'Error al procesar el empate';
+        }
+      });
+    }
+
+    this.mostrarResultado = true; // Mostrar el modal de resultado
+
     console.log('Juego terminado', {
       jugador: this.puntosJuego,
-      computadora: this.puntosComputadora
+      computadora: this.puntosComputadora,
+      resultado: this.mensajeResultado
     });
   }
 
+  cerrarModalResultado(): void {
+    this.mostrarResultado = false; // Ocultar el modal de resultado
+  }
+
   nuevoJuego(): void {
-    this.blackJackService.iniciarJuego();
-    this.actualizarEstadoDesdeServicio();
-    this.juegoTerminado = false;
+    
+    this.mostrarModal = true; // Abrir el modal para ingresar un nuevo monto de apuesta
+    this.puntosJuego = 0; // Reiniciar puntos del jugador
+    this.puntosComputadora = 0; // Reiniciar puntos de la computadora
+    this.cartasJugador = []; // Reiniciar cartas del jugador
+    this.cartasComputadora = []; // Reiniciar cartas de la computadora
+    this.juegoTerminado = false; // Reiniciar estado del juego
+    this.mensajeResultado = ''; // Limpiar el mensaje de resultado
     this.montoApuesta = 0;
   }
 
-  private determinarGanador(): string {
-    if (this.puntosJuego > 21) return 'computadora';
-    if (this.puntosComputadora > 21) return 'jugador';
-    if (this.puntosJuego > this.puntosComputadora) return 'jugador';
-    if (this.puntosComputadora > this.puntosJuego) return 'computadora';
+  private determinarGanador(puntosJuego: number, puntosComputadora: number): string {
+    // Si el jugador se pasa de 21, la computadora gana
+    if (puntosJuego > 21) {
+      return 'computadora';
+    }
+  
+    // Si la computadora se pasa de 21, el jugador gana
+    if (puntosComputadora > 21) {
+      return 'jugador';
+    }
+  
+    // Si ambos tienen puntajes válidos, gana quien esté más cerca de 21
+    if (puntosComputadora > puntosJuego) {
+      return 'computadora';
+    }
+  
+    if (puntosJuego > puntosComputadora) {
+      return 'jugador';
+    }
+  
+    // Si ambos tienen el mismo puntaje, es un empate
     return 'empate';
   }
 

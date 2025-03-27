@@ -42,6 +42,21 @@
         </div>
     </div>
 
+    <!-- Modal para mostrar el resultado del juego -->
+<div id="modalResultado" class="modal" *ngIf="mostrarResultado">
+    <div class="modal-content card">
+        <h4>{{ mensajeResultado }}</h4>
+        <div class="resultado-detalle">
+            <p>Jugador: <span>{{ puntosJuego }}</span></p>
+            <p>Computadora: <span>{{ puntosComputadora }}</span></p>
+        </div>
+        <div class="modal-footer center-align">
+            <button class="btn waves-effect waves-light" (click)="cerrarModalResultado()">
+                <i class="material-icons left">close</i>Cerrar
+            </button>
+        </div>
+    </div>
+</div>
     <!-- Contenido principal del juego (solo visible cuando el modal está cerrado) -->
     <div *ngIf="!mostrarModal">
         <!-- Indicador de puntos de balance global -->
@@ -91,6 +106,8 @@
         </div>
     </div>
 
+    
+    
     
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

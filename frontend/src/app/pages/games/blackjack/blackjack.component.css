@@ -2,10 +2,11 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a;
+    background-color: #1a1a1a; /* Fondo oscuro */
     color: white;
     font-family: 'Roboto', sans-serif;
-    min-height: 100vh;
+    height: 100%;
+    overflow: hidden; /* Evita barras de desplazamiento innecesarias */
 }
 
 /* Modal de apuesta con fondo oscuro */
