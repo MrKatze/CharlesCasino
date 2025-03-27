@@ -27,6 +27,11 @@ export class DashboardComponent {
 
   irTiendaPuntos() {
     this.router.navigate(['/points_shop']);
+
+  }
+  
+  irABlackJack() {
+    this.router.navigate(['/games/blackjack']);
   }
 
   logout() {

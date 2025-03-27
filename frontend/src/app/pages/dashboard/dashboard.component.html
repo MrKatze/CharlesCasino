@@ -28,11 +28,12 @@
     </div>
 
     <div class="card-container">
-
-      <div class="card" routerLink="/blackjack">
-        <img src="assets/images/blackjack.jpg" alt="Black Jack" />
-        <div class="title">BLACK JACK</div>
+      <div class="card" (click)=irABlackJack()>
+        <img src="assets/images/blackjack.png" alt="Black Jack" />
+        <div class="title">Black Jack</div>
       </div>
+    
+      
 
       <div class="card" (click)="irRuleta()">
         <img src="assets/images/ruleta.jpg" alt="Ruleta" />

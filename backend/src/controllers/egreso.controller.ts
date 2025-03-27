@@ -17,15 +17,15 @@ export const getEgresos = async (req: Request, res: Response, next: NextFunction
 export const createEgreso = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const connection = await pool.getConnection();
     try {
-      const { id_usuario, monto, metodo, fecha }: Egreso = req.body;
+      const { id_usuario, monto, metodo, fecha, hora }: Egreso = req.body;
   
       // Iniciar la transacción
       await connection.beginTransaction();
   
       // Insertar el nuevo egreso
       const [result] = await connection.query(
-        'INSERT INTO Egreso (id_usuario, monto, metodo, fecha) VALUES (?, ?, ?, ?)',
-        [id_usuario, monto, metodo, fecha]
+        'INSERT INTO Egreso (id_usuario, monto, metodo, fecha, hora) VALUES (?, ?, ?, ?, ?)',
+        [id_usuario, monto, metodo, fecha, hora]
       );
   
       // Restar el monto al saldo del usuario
@@ -87,18 +87,18 @@ export const getEgresosByUserID = async (req: Request, res: Response, next: Next
 export const updateEgreso = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
-    const { id_usuario, monto, metodo, fecha }: Egreso = req.body;
+    const { id_usuario, monto, metodo, fecha,hora }: Egreso = req.body;
 
     const [result] = await pool.query(
-      'UPDATE Egreso SET id_usuario = ?, monto = ?, metodo = ?, fecha = ? WHERE id_egreso = ?',
-      [id_usuario, monto, metodo, fecha, id]
+      'UPDATE Egreso SET id_usuario = ?, monto = ?, metodo = ?, fecha = ?, hora = ? WHERE id_egreso = ?',
+      [id_usuario, monto, metodo, fecha, hora, id]
     );
 
     if ((result as any).affectedRows === 0) {
       res.status(404).json({ error: "Egreso no encontrado" });
     }
 
-    res.json({ id_egreso: id, id_usuario, monto, metodo, fecha });
+    res.json({ id_egreso: id, id_usuario, monto, metodo, fecha, hora });
   } catch (error) {
     console.error("❌ Error al actualizar egreso:", error);
     res.status(500).json({ error: "Error al actualizar egreso" });
