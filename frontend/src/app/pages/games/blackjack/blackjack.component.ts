@@ -90,7 +90,8 @@ export class BlackJackComponent implements OnInit {
       id_usuario: parseInt(userId, 10),
       monto: this.montoApuesta,
       metodo: 'apuesta_blackjack',
-      fecha: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      fecha: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      hora: new Date().toTimeString().slice(0, 8) // Agregar la hora en formato HH:mm:ss
     };
   
     this.egresosService.createEgreso(egresoData).subscribe({
@@ -176,7 +177,8 @@ export class BlackJackComponent implements OnInit {
         id_usuario: parseInt(userId, 10),
         monto: this.montoApuesta * 2, // Ganancia del jugador
         metodo: 'apuesta_blackjack',
-        fecha: new Date().toISOString().slice(0, 19).replace('T', ' ')
+        fecha: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        hora: new Date().toTimeString().slice(0, 8) // Agregar la hora en formato HH:mm:ss
       };
 
       this.ingresosService.createIngreso(ingresoData).subscribe({
@@ -206,7 +208,8 @@ export class BlackJackComponent implements OnInit {
         id_usuario: parseInt(userId, 10),
         monto: this.montoApuesta, // Devolver la apuesta al jugador
         metodo: 'apuesta_blackjack_empate',
-        fecha: new Date().toISOString().slice(0, 19).replace('T', ' ')
+        fecha: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        hora: new Date().toTimeString().slice(0, 8) // Agregar la hora en formato HH:mm:ss
       };
 
       this.ingresosService.createIngreso(ingresoData).subscribe({
