@@ -35,6 +35,7 @@ export class BlackJackComponent implements OnInit {
   procesando: boolean = false;
   mensajeResultado: string = '';
   mostrarResultado: boolean = false; // Controla la visibilidad del modal de resultado
+  private audio = new Audio();
 
   ngOnInit(): void {
     this.cargarPuntosUsuario();
@@ -106,6 +107,17 @@ export class BlackJackComponent implements OnInit {
     });
   }
 
+  reproducirSonido(ruta: string): void {
+    if (this.audio) {
+      this.audio.src = ruta;
+      this.audio.load();
+      this.audio.play().catch((error) => {
+        console.error('Error al reproducir el sonido:', error);
+      });
+    } else {
+      console.warn('El objeto Audio no está disponible en este entorno.');
+    }
+  }
 
   pedirCarta(): void {
     if (!this.juegoTerminado && !this.procesando) {
@@ -113,6 +125,7 @@ export class BlackJackComponent implements OnInit {
       try {
         if (!this.juegoTerminado) {
           try {
+            this.reproducirSonido('/assets/sonidos/card_draw.mp3'); // Sonido al pedir carta
             const resultado = this.blackJackService.pedirCarta();
             this.actualizarEstadoDesdeServicio();
             
@@ -138,6 +151,7 @@ export class BlackJackComponent implements OnInit {
     if (!this.juegoTerminado) {
       this.juegoTerminado = true;
       
+      this.reproducirSonido('assets/sonidos/stop.mp3'); // Sonido al detener
     }
   }
   
@@ -206,6 +220,9 @@ export class BlackJackComponent implements OnInit {
       });
     }
 
+    // Reproducir sonido según el resultado
+    
+
     this.mostrarResultado = true; // Mostrar el modal de resultado
 
     console.log('Juego terminado', {
@@ -215,12 +232,21 @@ export class BlackJackComponent implements OnInit {
     });
   }
 
+  
+
   cerrarModalResultado(): void {
     this.mostrarResultado = false; // Ocultar el modal de resultado
+    if (this.mensajeResultado.includes('Ganaste')) {
+      this.reproducirSonido('assets/sonidos/win.mp3'); // Sonido de victoria
+    } else if (this.mensajeResultado.includes('perdiste')) {
+      this.reproducirSonido('assets/sonidos/lose.mp3'); // Sonido de derrota
+    } else if (this.mensajeResultado.includes('empate')) {
+      this.reproducirSonido('assets/sonidos/draw.mp3'); // Sonido de empate
+    }
   }
 
   nuevoJuego(): void {
-    
+    this.reproducirSonido('assets/sonidos/card_shuffle.mp3'); // Sonido al iniciar un nuevo juego
     this.mostrarModal = true; // Abrir el modal para ingresar un nuevo monto de apuesta
     this.puntosJuego = 0; // Reiniciar puntos del jugador
     this.puntosComputadora = 0; // Reiniciar puntos de la computadora
