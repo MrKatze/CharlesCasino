@@ -6,10 +6,7 @@ import { RouterModule } from '@angular/router';
   standalone: true, // Asegura que el componente sea standalone
   imports: [RouterModule], // 🔹 Importa el módulo de rutas
   template: `
-    <div class="container">
-      <h1></h1>
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.css']
 })

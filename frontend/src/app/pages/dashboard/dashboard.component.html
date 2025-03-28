@@ -16,6 +16,10 @@
       <span class="icon"><i class="fa-solid fa-history"></i></span>
       <span class="text">Historial</span>
     </a>
+    <a (click)="irAnuncios()">
+      <span class="icon"><i class="fa-solid fa-video"></i></span>
+      <span class="text">Ver Anuncios</span>
+    </a>
     <a (click)="logout()">
       <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
       <span class="text">Cerrar Sesión</span>
@@ -28,12 +32,10 @@
     </div>
 
     <div class="card-container">
-      <div class="card" (click)=irABlackJack()>
+      <div class="card" (click)="irABlackJack()">
         <img src="assets/images/blackjack.png" alt="Black Jack" />
         <div class="title">Black Jack</div>
       </div>
-    
-      
 
       <div class="card" (click)="irRuleta()">
         <img src="assets/images/ruleta.jpg" alt="Ruleta" />
@@ -44,7 +46,6 @@
         <img src="assets/images/tragaperras.jpg" alt="Tragaperras" />
         <div class="title">TRAGAPERRAS</div>
       </div>
-
     </div>
   </div>
 </div>

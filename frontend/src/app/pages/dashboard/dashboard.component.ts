@@ -33,9 +33,16 @@ export class DashboardComponent {
   irABlackJack() {
     this.router.navigate(['/games/blackjack']);
   }
-
-  logout() {
+  irAnuncios() {
+    this.router.navigate(['/anuncios']);  
+  }
+  
+  logout(): void {
+    // Eliminar los datos de la cuenta de anuncios vistos
+    localStorage.removeItem('anunciosVistos');
+    // Eliminar el token de autenticación
     localStorage.removeItem('token');
+    // Redirigir al usuario a la página de login
     this.router.navigate(['/login']);
   }
 
