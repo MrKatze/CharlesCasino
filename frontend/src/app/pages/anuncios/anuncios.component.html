@@ -1,0 +1,49 @@
+<div class="sidebar-container">
+  <div class="sidebar">
+    <a routerLink="/dashboard">
+      <span class="icon"><i class="fas fa-home"></i></span>
+      <span class="text">Principal</span>
+    </a>
+    <a (click)="irAPerfil()">
+      <span class="icon"><i class="fa-solid fa-user"></i></span>
+      <span class="text">Perfil</span>
+    </a>
+    <a (click)="irTiendaPuntos()">
+      <span class="icon"><i class="fa-solid fa-shop"></i></span>
+      <span class="text">Tienda de Puntos</span>
+    </a>
+    <a routerLink="/historial">
+      <span class="icon"><i class="fa-solid fa-history"></i></span>
+      <span class="text">Historial</span>
+    </a>
+    <a (click)="logout()">
+      <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+      <span class="text">Cerrar Sesión</span>
+    </a>
+  </div>
+
+  <div class="content veranuncio-content">
+    <h2 class="titulo-slot">🎥 Ver Anuncio 🎥</h2>
+
+    <div *ngIf="puedeVerAnuncio(); else limiteAnuncios">
+        <div class="video-container">
+            <video #videoPlayer width="100%" (timeupdate)="actualizarProgreso(videoPlayer)" (ended)="finalizarVideo()">
+                <source src="../../../assets/videos/video.mp4" type="video/mp4">
+                Tu navegador no soporta la reproducción de videos.
+            </video>
+        </div>
+
+        <div class="progress-bar-container">
+            <progress [value]="progreso" max="100"></progress>
+        </div>
+
+        <div class="button-container">
+            <button class="spin-button" (click)="videoPlayer.play()">Reproducir Anuncio</button>
+        </div>
+    </div>
+
+    <ng-template #limiteAnuncios>
+        <p>Has alcanzado el límite de anuncios permitidos para hoy. Vuelve mañana para ver más anuncios.</p>
+    </ng-template>
+</div>
+</div>

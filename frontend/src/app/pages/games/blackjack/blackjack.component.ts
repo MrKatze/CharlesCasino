@@ -35,15 +35,21 @@ export class BlackJackComponent implements OnInit {
   procesando: boolean = false;
   mensajeResultado: string = '';
   mostrarResultado: boolean = false; // Controla la visibilidad del modal de resultado
-  private audio = new Audio();
+  private audio: HTMLAudioElement | null = typeof Audio !== 'undefined' ? new Audio() : null;
 
   ngOnInit(): void {
     this.cargarPuntosUsuario();
   }
 
   cargarPuntosUsuario(): void {
+    if (typeof localStorage === 'undefined') {
+      console.error('localStorage no está disponible en este entorno.');
+      this.errorApuesta = 'No se pudo cargar la información del usuario.';
+      return;
+    }
+
     const user = localStorage.getItem('id_usuario');
-  
+
     if (user) {
       this.usuariosService.getUsuarioPuntos(user).subscribe({
         next: (response) => {
@@ -80,7 +86,7 @@ export class BlackJackComponent implements OnInit {
   iniciarJuego(): void {
     if (!this.validarApuesta()) return;
   
-    const userId = localStorage.getItem('id_usuario');
+    const userId = typeof localStorage !== 'undefined' ? localStorage.getItem('id_usuario') : null;
     if (!userId) {
       this.errorApuesta = 'Usuario no identificado';
       return;
@@ -167,7 +173,7 @@ export class BlackJackComponent implements OnInit {
     if (ganador === 'jugador') {
       this.mensajeResultado = '¡Felicidades! Ganaste el juego.';
 
-      const userId = localStorage.getItem('id_usuario');
+      const userId = typeof localStorage !== 'undefined' ? localStorage.getItem('id_usuario') : null;
       if (!userId) {
         this.errorApuesta = 'Usuario no identificado';
         return;
@@ -198,7 +204,7 @@ export class BlackJackComponent implements OnInit {
     } else if (ganador === 'empate') {
       this.mensajeResultado = 'Es un empate.';
 
-      const userId = localStorage.getItem('id_usuario');
+      const userId = typeof localStorage !== 'undefined' ? localStorage.getItem('id_usuario') : null;
       if (!userId) {
         this.errorApuesta = 'Usuario no identificado';
         return;
