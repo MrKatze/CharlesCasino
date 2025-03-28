@@ -1,1 +1,101 @@
-<p>ruleta works!</p>
+<div id="container">
+  <div class="roulette-container">
+    <div class="wheel-wrapper">
+      <img #ruleta id="myImage" src="assets/ruleta/ruleta.png" alt="ruleta" class="ruleta" />
+      <div class="arrow"></div>
+    </div>
+    <br>
+    <br>
+    <button (click)="newGame()" class="spin-button">
+      GIRAR RULETA
+    </button>
+  </div>
+  <div class="boards">
+    <p>Has seleccionado:{{select}}</p>
+    <table>
+      <tr>
+        <td class="verde"><span>0</span></td>
+        <td class="negro"><span>3</span></td>
+        <td class="rojo"><span>6</span></td>
+        <td class="negro"><span>9</span></td>
+        <td class="rojo"><span>12</span></td>
+        <td class="negro"><span>15</span></td>
+        <td class="rojo"><span>18</span></td>
+        <td class="negro"><span>21</span></td>
+        <td class="rojo"><span>24</span></td>
+        <td class="negro"><span>27</span></td>
+        <td class="rojo"><span>30</span></td>
+        <td class="negro"><span>33</span></td>
+        <td class="rojo"><span>36</span></td>
+        <td class="to"><span>2:1</span></td>
+      </tr>
+      <tr>
+        <td class="verde"><span>00</span></td>
+        <td class="rojo"><span>2</span></td>
+        <td class="negro"><span>5</span></td>
+        <td class="rojo"><span>8</span></td>
+        <td class="negro"><span>11</span></td>
+        <td class="rojo"><span>14</span></td>
+        <td class="negro"><span>17</span></td>
+        <td class="rojo"><span>20</span></td>
+        <td class="negro"><span>23</span></td>
+        <td class="rojo"><span>26</span></td>
+        <td class="negro"><span>29</span></td>
+        <td class="rojo"><span>32</span></td>
+        <td class="negro"><span>35</span></td>
+        <td class="to"><span>2:1</span></td>
+      </tr>
+      <tr>
+        <td class="to"></td>
+        <td class="negro"><span>1</span></td>
+        <td class="rojo"><span>4</span></td>
+        <td class="negro"><span>7</span></td>
+        <td class="rojo"><span>10</span></td>
+        <td class="negro"><span>13</span></td>
+        <td class="rojo"><span>16</span></td>
+        <td class="negro"><span>19</span></td>
+        <td class="rojo"><span>22</span></td>
+        <td class="negro"><span>25</span></td>
+        <td class="rojo"><span>28</span></td>
+        <td class="negro"><span>31</span></td>
+        <td class="rojo"><span>34</span></td>
+        <td class="to"><span>2:1</span></td>
+      </tr>
+    </table>
+
+    <table class="table2">
+      <tr>
+        <th class="verde_table2">1st-12</th>
+        <th class="verde_table2">2and-12</th>
+        <th class="verde_table2">3rd-12</th>
+      </tr>
+      <tr style="padding-top:0cm; margin-top: 0px;">
+        <td style="padding-top:0cm; padding-left:0cm;  margin: 0px; border: 3px solid orange; border-">
+          <table>
+            <tr>
+              <td class="verde_table2 td_class tabla-celda">1-18</td>
+              <td class="verde_table2 td_class tabla-celda">EVEN</td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td class="rojo td_class tabla-celda"></td>
+              <td class="negro td_class tabla-celda"></td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td class="verde_table2 td_class tabla-celda">ODD</td>
+              <td class="verde_table2 td_class tabla-celda">19-36</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <button (click)="addFunction(isZero)">prueba</button>
+  </div>
+</div>
