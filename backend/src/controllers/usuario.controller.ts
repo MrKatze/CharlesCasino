@@ -11,7 +11,24 @@ export const getUsuarios = async (req: Request, res: Response): Promise<void> =>
     res.status(500).json({ error: "Error al obtener usuarios" });
   }
 };
+export const getUserPointsById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Extraer el id del usuario desde los parámetros de la solicitud
+    const userId = req.params.id_usuario;
 
+    // Consulta para obtener los puntos del usuario específico
+    const puntos = await pool.query('SELECT puntos FROM Usuario WHERE id_usuario = ?', [userId]);
+    res.json(puntos);
+    // Verificar si se encontraron resultados
+    if (puntos == null ) {
+      res.status(404).json({ error: "Usuario no encontrado" });
+      return;
+    }
+  } catch (error) {
+    console.error("❌ Error al obtener los puntos del usuario:", error);
+    res.status(500).json({ error: "Error al obtener los puntos del usuario" });
+  }
+};
 export const createUsuario = async (req: Request, res: Response): Promise<void> => {
   try {
     req.body.id_rol = 2;
@@ -31,7 +48,7 @@ export const createUsuario = async (req: Request, res: Response): Promise<void> 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, password }: Usuario = req.body;
-    
+
     // Verificar que username y password no estén vacíos
     if (!username || !password) {
       res.status(400).json({ error: "Username y password son requeridos" });
@@ -55,3 +72,40 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ error: "Error al hacer login" });
   }
 };
+
+export const getUsuarioById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const [rows] = await pool.query('SELECT * FROM Usuario WHERE id_usuario = ?', [id]);
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error al obtener usuario:", error);
+    res.status(500).json({ error: "Error al obtener usuario" });
+  }
+};
+
+export const getPointsByID = async (req: Request, res: Response): Promise<void> => {
+  try{ 
+    const { id } = req.params;
+    console.log("id", id);
+    const [rows] = await pool.query('SELECT puntos FROM Usuario WHERE id_usuario = ?', [id]);
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error al obtener los puntos de usuario:", error);
+    res.status(500).json({ error: "Error al obtener puntos del usuario" });
+  }
+};
+
+export const updatePointsByID = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { puntos } = req.body;
+    await pool.query('UPDATE Usuario SET puntos = ? WHERE id_usuario = ?', [puntos, id]);
+    res.json({ message: "Puntos actualizados" });
+  } catch (error) {
+    console.error("❌ Error al actualizar puntos de usuario:", error);
+    res.status(500).json({ error: "Error al actualizar puntos del usuario" });
+  }
+}
+
+
