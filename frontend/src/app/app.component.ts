@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule], // 🔹 Importa el módulo de rutas
   template: `
     <router-outlet></router-outlet>
+    
   `,
   styleUrls: ['./app.component.css']
 })
