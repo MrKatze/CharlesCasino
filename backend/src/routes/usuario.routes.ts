@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getUserPointsById,getUsuarios, createUsuario, login } from '../controllers/usuario.controller';
+import { getUserPointsById,getUsuarios, createUsuario, login,getUsuarioById } from '../controllers/usuario.controller';
 
 const router = Router();
 
@@ -15,4 +15,5 @@ router.post('/createUsuario', createUsuario);
 // Ruta para iniciar sesión
 router.post('/login', login);
 
+router.get('/datos/:id_usuario',getUsuarioById);
 export default router;

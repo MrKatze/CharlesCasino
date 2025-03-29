@@ -1,59 +1,66 @@
-<div class="points-shop">
-    <h1>Tienda de Puntos</h1>
-    <p>¡Intercambia tus puntos por increíbles premios!</p>
+<div class="sidebar-container">
+    <div class="sidebar">
+      <a (click)="goToDashboard()">
+        <span class="icon"><i class="fas fa-home"></i></span>
+        <span class="text">Principal</span>
+      </a>
+      <a (click)="irAPerfil()">
+        <span class="icon"><i class="fa-solid fa-user"></i></span>
+        <span class="text">Perfil</span>
+      </a>
+      <a (click)="irTiendaPuntos()">
+        <span class="icon"><i class="fa-solid fa-shop"></i></span>
+        <span class="text">Tienda de Puntos</span>
+      </a>
+      <a (click)="goToHistorial()">
+        <span class="icon"><i class="fa-solid fa-history"></i></span>
+        <span class="text">Historial</span>
+      </a>
+      <a (click)="irAnuncios()">
+        <span class="icon"><i class="fa-solid fa-video"></i></span>
+        <span class="text">Ver Anuncios</span>
+      </a>
+      <a (click)="logout()">
+        <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+        <span class="text">Cerrar Sesión</span>
+      </a>
+    </div>
+  
+    <div class="content">
+        <div class="points-shop">
+            <h1>Tienda de Puntos</h1>
+            <p>¡Intercambia tus puntos por increíbles premios!</p>
+            
+            <div class="shop-items">
+                <div class="shop-item">
+                    <div class="item-image">
+                        <img src="" alt="Insignia 1" />
+                    </div>
+                    <h3>Insignia de Oro</h3>
+                    <p>Obtén esta insignia exclusiva para tu perfil</p>
+                    <button>Intercambiar</button>
+                </div>
 
-    <!-- <div class="shop-items">
-        <div class="shop-item" *ngFor="let item of items">
-            <img [src]="item.image" alt="{{ item.name }}" class="item-image" />
-            <h2> EJEMPLO ITEM</h2>
-            <p> DESCRIPCION </p>
-            <p><strong> 1000 puntos</strong></p>
-            <button (click)="redeemItem(item)" [disabled]="userPoints < item.points">
-                Canjear
-            </button>
+                <div class="shop-item">
+                    <div class="item-image">
+                        <img src="" alt="Insignia 2" />
+                    </div>
+                    <h3>Insignia de Plata</h3>
+                    <p>Una insignia de plata para tus logros en el casino</p>
+                    <button>Intercambiar</button>
+                </div>
+
+                <div class="shop-item">
+                    <div class="item-image">
+                        <img src="" alt="Insignia 3" />
+                    </div>
+                    <h3>Insignia de Bronce</h3>
+                    <p>Demuestra tu habilidad con esta insignia de bronce</p>
+                    <button>Intercambiar</button>
+                </div>
+
+            </div>
         </div>
-    </div> -->
-
-</div>
-
-<style>
-    .points-shop {
-        text-align: center;
-        margin: 20px;
-    }
-
-    .shop-items {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .shop-item {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 15px;
-        width: 200px;
-        text-align: center;
-    }
-
-    .item-image {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
-    }
-</style>
+    </div>
+    </div>
+  
