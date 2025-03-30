@@ -75,8 +75,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
 export const getUsuarioById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
-    const [rows] = await pool.query('SELECT * FROM Usuario WHERE id_usuario = ?', [id]);
+    const { id_usuario } = req.params;
+    
+    const [rows] = await pool.query('SELECT * FROM Usuario WHERE id_usuario = ?', [id_usuario]);
     res.json(rows);
   } catch (error) {
     console.error("❌ Error al obtener usuario:", error);
