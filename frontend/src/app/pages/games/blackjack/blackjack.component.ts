@@ -303,4 +303,29 @@ export class BlackJackComponent implements OnInit {
     this.cartasComputadora = estado.cartasComputadora;
     this.puntosComputadora = estado.puntosComputadora;
   }
+
+  irAPerfil() {
+    this.router.navigate(['/account']);
+  }
+
+  irTragaperras() {
+    this.router.navigate(['/games/tragaperras']);
+  }
+
+  irRuleta() {
+    this.router.navigate(['/games/ruleta']);
+  }
+
+  irTiendaPuntos() {
+    this.router.navigate(['/points_shop']);
+
+  }
+  
+  irABlackJack() {
+    this.router.navigate(['/games/blackjack']);
+  }
+  irAnuncios() {
+    this.router.navigate(['/anuncios']);  
+  }
+  
 }

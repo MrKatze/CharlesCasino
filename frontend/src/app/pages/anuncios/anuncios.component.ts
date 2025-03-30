@@ -75,30 +75,30 @@ export class AnunciosComponent {
         });
     }
 
-    irAPerfil(): void {
+    irAPerfil() {
         this.router.navigate(['/account']);
     }
 
-    irTragaperras(): void {
+    irTragaperras() {
         this.router.navigate(['/games/tragaperras']);
     }
 
-    irRuleta(): void {
+    irRuleta() {
         this.router.navigate(['/games/ruleta']);
     }
 
-    irTiendaPuntos(): void {
+    irTiendaPuntos() {
         this.router.navigate(['/points_shop']);
+
     }
 
-    irABlackJack(): void {
+    irABlackJack() {
         this.router.navigate(['/games/blackjack']);
     }
-
-    logout(): void {
-        localStorage.removeItem('token');
-        this.router.navigate(['/login']);
+    irAnuncios() {
+        this.router.navigate(['/anuncios']);
     }
+
 
     bloquearAdelanto(event: Event): void {
         const videoElement = event.target as HTMLVideoElement;
@@ -140,4 +140,13 @@ export class AnunciosComponent {
     puedeVerAnuncio(): boolean {
         return this.anunciosVistosHoy < this.maxAnunciosPorDia;
     }
+
+    logout(): void {
+        // Eliminar los datos de la cuenta de anuncios vistos
+        localStorage.removeItem('anunciosVistos');
+        // Eliminar el token de autenticación
+        localStorage.removeItem('token');
+        // Redirigir al usuario a la página de login
+        this.router.navigate(['/login']);
+      }
 }

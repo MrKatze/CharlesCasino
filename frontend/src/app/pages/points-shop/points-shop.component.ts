@@ -33,4 +33,17 @@ export class PointsShopComponent {
     localStorage.removeItem('token');
     window.location.href = '/login';
   }
+
+  irTragaperras() {
+    this.router.navigate(['/games/tragaperras']);
+  }
+
+  irRuleta() {
+    this.router.navigate(['/games/ruleta']);
+  }
+  
+  irABlackJack() {
+    this.router.navigate(['/games/blackjack']);
+  }
+
 }

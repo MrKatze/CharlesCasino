@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { UsuariosService } from '../../../services/usuarios.service';
 
 @Component({
   selector: 'app-slot-machine',
@@ -9,116 +10,133 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './tragaperras.component.html',
   styleUrls: ['./tragaperras.component.css']
 })
-export class TragaperrasComponent {
+export class TragaperrasComponent implements OnInit {
   private symbolHeight = 38;
   private totalSymbols = 8;
   private spins = 4;
+
+  puntosActuales: number = 0;
+
   reels = [
     { positionY: 0, transition: 'none' },
     { positionY: 0, transition: 'none' },
     { positionY: 0, transition: 'none' }
   ];
-  router: any;
-  test = new Set();
-  updatePuntos: any;
 
-  constructor(private http: HttpClient) { }
+  test = new Set<number>();
 
-  setPuntos(puntos: number) {
-    console.log("Puntos actualizados");
-    this.http.get(`http://localhost:3000/api/usuario/getPointsByID/${localStorage.getItem("id_usuario")}`).subscribe({
-      next: (response: any) => {
-        console.log('Puntos actuales', response);
-        this.updatePuntos(response[0].puntos + puntos);
-        this.http.put(`http://localhost:3000/api/usuario/updatePointsByID/${localStorage.getItem("id_usuario")}`, { puntos: this.updatePuntos }).subscribe({
-          next: (response: any) => {
-            console.log('Puntos actualizados', response);
-          },
-          error: (error) => {
-            console.error('Error al actualizar puntos', error);
-          }
-        });
+  constructor(private http: HttpClient, private router: Router, private usuariosService: UsuariosService) {}
+
+  ngOnInit(): void {
+    this.obtenerPuntos();
+  }
+
+  obtenerPuntos(): void {
+    const user = localStorage.getItem('id_usuario');
+  
+    if (user) {
+      this.usuariosService.getUsuarioPuntos(user).subscribe({
+        next: (response) => {
+          const puntosData = Array.isArray(response) && response[0]?.[0]?.puntos ? response[0][0].puntos : 0;
+          this.puntosActuales = parseInt(puntosData, 10);
+        },
+        error: (error) => {
+          console.error('Error al obtener puntos:', error);
+        },
+      });
+    } else {
+      console.error('ID de usuario no encontrado.');
+      this.router.navigate(['/login']);
+    }
+  }
+  
+
+  descontarPuntos(monto: number): void {
+    const id_usuario = localStorage.getItem("id_usuario");
+    const egresoData = {
+      id_usuario: parseInt(id_usuario!, 10),
+      monto: monto,
+      metodo: 'apuesta_tragaperras',
+      fecha: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      hora: new Date().toTimeString().slice(0, 8)
+    };
+
+    this.http.post('http://localhost:3000/api/egresos', egresoData).subscribe({
+      next: () => {
+        this.puntosActuales -= monto;
+        console.log('Puntos descontados:', monto);
       },
-      error: (error) => {
-        console.error('Error al obtener puntos', error);
-      }
+      error: (error) => console.error('Error al descontar puntos:', error)
     });
   }
 
-  checkTargetIndex(targetIndex: number) {
-    console.log("checkTargetIndex:", targetIndex);
-    switch(targetIndex){
-      case 0:
-        console.log("Has ganado 100 puntos");
-        this.setPuntos(100);
-        break;
-      case 1:
-        console.log("Has ganado 200 puntos");
-        this.setPuntos(200);
-        break;
-      case 2:
-        console.log("Has ganado 300 puntos");
-        this.setPuntos(300);
-        break;
-      case 3:
-        console.log("Has ganado 400 puntos");
-        this.setPuntos(400);
-        break;
-      case 4:
-        console.log("Has ganado 500 puntos");
-        this.setPuntos(500);
-        break;
-      case 5:
-        console.log("Has ganado 600 puntos");
-        this.setPuntos(600);
-        break;
-      case 6:
-        console.log("Has ganado 700 puntos");
-        this.setPuntos(700);
-        break;
-      case 7:
-        console.log("Has ganado 800 puntos");
-        this.setPuntos(800);
-        break;
-    }
+  agregarPuntos(monto: number): void {
+    const id_usuario = localStorage.getItem("id_usuario");
+    const ingresoData = {
+      id_usuario: parseInt(id_usuario!, 10),
+      monto: monto,
+      metodo: 'ganancia_tragaperras',
+      fecha: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      hora: new Date().toTimeString().slice(0, 8)
+    };
+
+    this.http.post('http://localhost:3000/api/ingresos', ingresoData).subscribe({
+      next: () => {
+        this.puntosActuales += monto;
+        console.log('Puntos agregados:', monto);
+      },
+      error: (error) => console.error('Error al agregar puntos:', error)
+    });
   }
 
-  spin() {
+  checkTargetIndex(targetIndex: number): void {
+    const premios = [100, 200, 300, 400, 500, 600, 700, 800];
+    const puntosGanados = premios[targetIndex] ?? 0;
+    console.log(`Has ganado ${puntosGanados} puntos.`);
+    this.agregarPuntos(puntosGanados);
+  }
+
+  spin(): void {
+    if (this.puntosActuales < 10) {
+      alert('Puntos insuficientes para girar.');
+      return;
+    }
+
+    this.descontarPuntos(10);
     this.test.clear();
+
     this.reels.forEach((reel, index) => {
-      reel.positionY = 0
+      reel.positionY = 0;
       const targetIndex = Math.floor(Math.random() * this.totalSymbols);
       const fullRotations = (this.spins + index) * this.totalSymbols;
       const finalPosition = -(fullRotations + targetIndex) * this.symbolHeight;
 
-      const frutas = ["naranja", "sandia", "coco", "campana", "pera", "bar",
-         "siete", "cereza"]
-      console.log("Has sacado ",
-        index, frutas[targetIndex], fullRotations, finalPosition, -targetIndex * 
-        this.symbolHeight)
-        this.test.add(targetIndex)
-
       setTimeout(() => {
         reel.positionY = finalPosition - (index * 8);
-        // reel.positionY = -targetIndex * this.symbolHeight;
-        reel.transition = 'transform 3s ';
+        reel.transition = 'transform 3s';
       }, index * 500);
 
       setTimeout(() => {
         reel.transition = 'none';
-        // reel.positionY = -targetIndex * this.symbolHeight;
       }, 3000 + index * 500);
+
+      this.test.add(targetIndex);
     });
 
-    console.log(this.test)
-    if (this.test.size == 1) {
-      console.log("Has ganado");
-      this.checkTargetIndex(this.test.values().next().value as number);
-    }
+    setTimeout(() => {
+      if (this.test.size === 1) {
+        this.checkTargetIndex(this.test.values().next().value as number);
+      }
+    }, 3500);
   }
 
-  irAPerfil() {
-    this.router.navigate(['/account']);
+  irAPerfil() { this.router.navigate(['/account']); }
+  
+  irTiendaPuntos() { this.router.navigate(['/points_shop']); }
+  
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   irTragaperras() {
@@ -128,13 +146,11 @@ export class TragaperrasComponent {
   irRuleta() {
     this.router.navigate(['/games/ruleta']);
   }
-
-  irTiendaPuntos() {
-    this.router.navigate(['/points_shop']);
+  
+  irABlackJack() {
+    this.router.navigate(['/games/blackjack']);
   }
-
-  logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+  irAnuncios() {
+    this.router.navigate(['/anuncios']);  
   }
 }

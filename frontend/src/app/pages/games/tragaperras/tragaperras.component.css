@@ -1,85 +1,14 @@
-.slot-machine {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.slot-container {
-  width: 100px; /* Aumentar tamaño del contenedor */
-  height: 100px; /* Ajustar altura para mayor visibilidad */
-  overflow: hidden;
-  border: 2px solid black;
-  padding: auto;
-}
-.slot-reel {
-  width: calc(61*10);
-  height: calc(38px * 8 * 10);
-  background: url('../../../../assets/tragaperras/fruits.png') repeat-y;
-  background-position: center top;
-}
-button {
-  display: block;
-  margin: 10px auto;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #3B3B3B;
 }
 
-.tragaperras-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.titulo-slot {
-  color: gold;
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-  margin-bottom: 20px;
-}
-
-.slot-machine {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding: 20px;
-  background: linear-gradient(to bottom, #222, #444);
-  border: 4px solid #FFBF00;
-  border-radius: 20px;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-}
-
-.slot-container {
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-  border: 2px solid #FFBF00;
-  border-radius: 10px;
-  background-color: #000;
-}
-
-.spin-button {
-  margin-top: 30px;
-  background: linear-gradient(to right, #FFBF00, #3498db);
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 12px 40px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-  transition: transform 0.2s ease;
-}
-
-.spin-button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(to right, #3498db, #FFBF00);
-}
-
-/* Contenedor sidebar y contenido */
 .sidebar-container {
   display: flex;
   min-height: 100vh;
-  background-color: #3B3B3B; /* Asegura fondo uniforme en todo */
+  background-color: #3B3B3B;
 }
 
 .sidebar {
@@ -94,7 +23,6 @@ button {
   width: 250px;
 }
 
-/* Enlaces del sidebar */
 .sidebar a {
   display: flex;
   align-items: center;
@@ -110,7 +38,6 @@ button {
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
 }
 
-/* Íconos del sidebar */
 .sidebar .icon {
   min-width: 50px;
   text-align: center;
@@ -128,4 +55,60 @@ button {
 .sidebar:hover a .text {
   visibility: visible;
   opacity: 1;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #3B3B3B;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  background-color: transparent;
+}
+
+.card-container h2 {
+  color: gold;
+  text-shadow: 0 0 5px black;
+}
+
+.slot-machine {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.slot-container {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border: 2px solid black;
+  padding: auto;
+}
+
+.slot-reel {
+  width: calc(61*10);
+  height: calc(38px * 8 * 10);
+  background: url('../../../../assets/tragaperras/fruits.png') repeat-y;
+  background-position: center top;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+}
+
+p.puntos-usuario {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+  font-size: 18px;
+  text-align: center;
 }

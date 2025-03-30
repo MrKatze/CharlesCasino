@@ -15,24 +15,32 @@
     <a routerLink="/historial">
       <span class="icon"><i class="fa-solid fa-history"></i></span>
       <span class="text">Historial</span>
-    </a>  
+    </a>
+    <a (click)="irAnuncios()">
+      <span class="icon"><i class="fa-solid fa-video"></i></span>
+      <span class="text">Ver Anuncios</span>
+    </a>
     <a (click)="logout()">
       <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
       <span class="text">Cerrar Sesión</span>
     </a>
   </div>
 
-  <div class="content tragaperras-content">
-    <h2 class="titulo-slot">🎰 Tragamonedas 🎰</h2>
+  <div class="content">
+    <div class="card-container">
+      <h2>🎰 Tragaperras 🎰</h2>
+      <p class="puntos-usuario">Tus puntos: {{ puntosActuales }}</p>
 
-    <div class="slot-machine">
-      <div class="slot-container" *ngFor="let reel of reels; let i = index">
-        <div class="slot-reel" [ngStyle]="{'transform': 'translateY(' + 
-        reel.positionY + 'px)', 
-        'transition': reel.transition}"></div>
+      <div class="slot-machine">
+        <div class="slot-container" *ngFor="let reel of reels; let i = index">
+          <div class="slot-reel" [ngStyle]="{'transform': 'translateY(' + reel.positionY + 'px)', 
+                         'transition': reel.transition}">
+          </div>
+        </div>
       </div>
+      <button (click)="spin()">GIRAR (-10 puntos)</button>
     </div>
-
-    <button class="spin-button" (click)="spin()">GIRAR</button>
   </div>
+
+
 </div>
