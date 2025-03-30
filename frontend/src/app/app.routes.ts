@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component'; // Importa el AccountComponent
 import { TragaperrasComponent } from './pages/games/tragaperras/tragaperras.component';
 import { RuletaComponent } from './pages/games/ruleta/ruleta.component';
+import { BlackJackComponent } from './pages/games/blackjack/blackjack.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'account', component: AccountComponent }, 
   { path: 'games/tragaperras', pathMatch: 'full', component:TragaperrasComponent },
   { path: 'games/ruleta', pathMatch: 'full', component:RuletaComponent },
+  { path: 'games/blackjack', pathMatch: 'full', component:BlackJackComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

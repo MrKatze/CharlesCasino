@@ -17,15 +17,15 @@ export const getIngresos = async (req: Request, res: Response, next: NextFunctio
 export const createIngreso = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const connection = await pool.getConnection();
   try {
-    const { id_usuario, monto, metodo, fecha }: Ingreso = req.body;
+    const { id_usuario, monto, metodo, fecha, hora }: Ingreso = req.body;
 
     // Iniciar la transacción
     await connection.beginTransaction();
 
     // Insertar el nuevo ingreso
     const [result] = await connection.query(
-      'INSERT INTO Ingreso (id_usuario, monto, metodo, fecha) VALUES (?, ?, ?, ?)',
-      [id_usuario, monto, metodo, fecha]
+      'INSERT INTO Ingreso (id_usuario, monto, metodo, fecha, hora) VALUES (?, ?, ?, ?,?)',
+      [id_usuario, monto, metodo, fecha,hora]
     );
 
     // Actualizar el saldo del usuario

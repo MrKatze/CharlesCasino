@@ -4,5 +4,6 @@ export interface Ingreso {
     monto: number;
     metodo: string;
     fecha: Date;
+    hora: string;
   }
   

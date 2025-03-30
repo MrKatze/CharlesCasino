@@ -4,98 +4,117 @@
       <img #ruleta id="myImage" src="assets/ruleta/ruleta.png" alt="ruleta" class="ruleta" />
       <div class="arrow"></div>
     </div>
+    <div>
+      <p class="option">
+        Elige tu apuesta:
+      </p>
+      <br>
+      <button (click)="setBet(1)" class="bet_button">1</button>
+      <button (click)="setBet(5)" class="bet_button">5</button>
+      <button (click)="setBet(10)" class="bet_button">10</button>
+      <button (click)="setBet(50)" class="bet_button">50</button>
+      <button (click)="setBet(100)" class="bet_button">100</button>
+      <button (click)="setBet(500)" class="bet_button">500</button>
+      <button (click)="setBet(1000)" class="bet_button">1000</button>
+    </div>
     <br>
     <br>
-    <button (click)="newGame()" class="spin-button">
-      GIRAR RULETA
-    </button>
+
   </div>
   <div class="boards">
-    <p>Has seleccionado:{{select}}</p>
+    <div class="text">
+      <p class="option">Saldo actual: {{ saldo }}</p>
+      <p class="option">Apuesta actual: {{ apuesta }}</p>
+      <p class="option">Apuesta multiplicada por {{reward}}</p>
+    </div>
+    <div class="text">
+      <p class="option">Has seleccionado: {{option_selected}}</p>
+    </div>
+
     <table>
       <tr>
-        <td class="verde"><span>0</span></td>
-        <td class="negro"><span>3</span></td>
-        <td class="rojo"><span>6</span></td>
-        <td class="negro"><span>9</span></td>
-        <td class="rojo"><span>12</span></td>
-        <td class="negro"><span>15</span></td>
-        <td class="rojo"><span>18</span></td>
-        <td class="negro"><span>21</span></td>
-        <td class="rojo"><span>24</span></td>
-        <td class="negro"><span>27</span></td>
-        <td class="rojo"><span>30</span></td>
-        <td class="negro"><span>33</span></td>
-        <td class="rojo"><span>36</span></td>
-        <td class="to"><span>2:1</span></td>
+        <td (click)="addFunction(isZero)" class="verde"><span>0</span></td>
+        <td (click)="addNumber(3)" class="negro"><span>3</span></td>
+        <td (click)="addNumber(6)" class="rojo"><span>6</span></td>
+        <td (click)="addNumber(9)" class="negro"><span>9</span></td>
+        <td (click)="addNumber(12)" class="rojo"><span>12</span></td>
+        <td (click)="addNumber(15)" class="negro"><span>15</span></td>
+        <td (click)="addNumber(18)" class="rojo"><span>18</span></td>
+        <td (click)="addNumber(21)" class="negro"><span>21</span></td>
+        <td (click)="addNumber(24)" class="rojo"><span>24</span></td>
+        <td (click)="addNumber(27)" class="negro"><span>27</span></td>
+        <td (click)="addNumber(30)" class="rojo"><span>30</span></td>
+        <td (click)="addNumber(33)" class="negro"><span>33</span></td>
+        <td (click)="addNumber(36)" class="rojo"><span>36</span></td>
+        <td (click)="addFunction(firstRow)" class="to"><span>2:1</span></td>
       </tr>
       <tr>
-        <td class="verde"><span>00</span></td>
-        <td class="rojo"><span>2</span></td>
-        <td class="negro"><span>5</span></td>
-        <td class="rojo"><span>8</span></td>
-        <td class="negro"><span>11</span></td>
-        <td class="rojo"><span>14</span></td>
-        <td class="negro"><span>17</span></td>
-        <td class="rojo"><span>20</span></td>
-        <td class="negro"><span>23</span></td>
-        <td class="rojo"><span>26</span></td>
-        <td class="negro"><span>29</span></td>
-        <td class="rojo"><span>32</span></td>
-        <td class="negro"><span>35</span></td>
-        <td class="to"><span>2:1</span></td>
+        <td (click)="addFunction(isDoubleZero)" class="verde"><span>00</span></td>
+        <td (click)="addNumber(2)" class="rojo"><span>2</span></td>
+        <td (click)="addNumber(5)" class="negro"><span>5</span></td>
+        <td (click)="addNumber(8)" class="rojo"><span>8</span></td>
+        <td (click)="addNumber(11)" class="negro"><span>11</span></td>
+        <td (click)="addNumber(14)" class="rojo"><span>14</span></td>
+        <td (click)="addNumber(17)" class="negro"><span>17</span></td>
+        <td (click)="addNumber(20)" class="rojo"><span>20</span></td>
+        <td (click)="addNumber(23)" class="negro"><span>23</span></td>
+        <td (click)="addNumber(26)" class="rojo"><span>26</span></td>
+        <td (click)="addNumber(29)" class="negro"><span>29</span></td>
+        <td (click)="addNumber(32)" class="rojo"><span>32</span></td>
+        <td (click)="addNumber(35)" class="negro"><span>35</span></td>
+        <td (click)="addFunction(secondRow)" class="to"><span>2:1</span></td>
       </tr>
       <tr>
-        <td class="to"></td>
-        <td class="negro"><span>1</span></td>
-        <td class="rojo"><span>4</span></td>
-        <td class="negro"><span>7</span></td>
-        <td class="rojo"><span>10</span></td>
-        <td class="negro"><span>13</span></td>
-        <td class="rojo"><span>16</span></td>
-        <td class="negro"><span>19</span></td>
-        <td class="rojo"><span>22</span></td>
-        <td class="negro"><span>25</span></td>
-        <td class="rojo"><span>28</span></td>
-        <td class="negro"><span>31</span></td>
-        <td class="rojo"><span>34</span></td>
-        <td class="to"><span>2:1</span></td>
+        <td style="background: #5C0E0E; border: none; box-shadow: none;"></td>
+        <td (click)="addNumber(1)" class="negro"><span>1</span></td>
+        <td (click)="addNumber(4)" class="rojo"><span>4</span></td>
+        <td (click)="addNumber(7)" class="negro"><span>7</span></td>
+        <td (click)="addNumber(10)" class="rojo"><span>10</span></td>
+        <td (click)="addNumber(13)" class="negro"><span>13</span></td>
+        <td (click)="addNumber(16)" class="rojo"><span>16</span></td>
+        <td (click)="addNumber(19)" class="negro"><span>19</span></td>
+        <td (click)="addNumber(22)" class="rojo"><span>22</span></td>
+        <td (click)="addNumber(25)" class="negro"><span>25</span></td>
+        <td (click)="addNumber(28)" class="rojo"><span>28</span></td>
+        <td (click)="addNumber(31)" class="negro"><span>31</span></td>
+        <td (click)="addNumber(34)" class="rojo"><span>34</span></td>
+        <td (click)="addFunction(thirdRow)" class="to"><span>2:1</span></td>
       </tr>
     </table>
 
     <table class="table2">
       <tr>
-        <th class="verde_table2">1st-12</th>
-        <th class="verde_table2">2and-12</th>
-        <th class="verde_table2">3rd-12</th>
+        <th (click)="addFunction(firstThree)" class="fondo_table2">1st - 12</th>
+        <th (click)="addFunction(secondThree)" class="fondo_table2">2and - 12</th>
+        <th (click)="addFunction(thridThree)" class="fondo_table2">3rd - 12</th>
       </tr>
-      <tr style="padding-top:0cm; margin-top: 0px;">
-        <td style="padding-top:0cm; padding-left:0cm;  margin: 0px; border: 3px solid orange; border-">
-          <table>
-            <tr>
-              <td class="verde_table2 td_class tabla-celda">1-18</td>
-              <td class="verde_table2 td_class tabla-celda">EVEN</td>
-            </tr>
-          </table>
-        </td>
-        <td>
-          <table>
-            <tr>
-              <td class="rojo td_class tabla-celda"></td>
-              <td class="negro td_class tabla-celda"></td>
-            </tr>
-          </table>
-        </td>
-        <td>
-          <table>
-            <tr>
-              <td class="verde_table2 td_class tabla-celda">ODD</td>
-              <td class="verde_table2 td_class tabla-celda">19-36</td>
-            </tr>
-          </table>
-        </td>
+      <tr>
+        <th class="fondo_table2 split-cell">
+          <div class="split-content">
+            <span (click)="addFunction(firstMiddle)" style="margin-left: 1.5cm;">1 - 18</span>
+            <div class="separator"></div>
+            <span (click)="addFunction(isEven)" style="margin-left: 0.5cm;">EVEN</span>
+          </div>
+        </th>
+        <th class="fondo_table2 split-cell">
+          <div class="split-content" style="width: 100%;">
+            <span (click)="addFunction(isRed)"
+              style=" flex: 1; height: 100%; background: linear-gradient(135deg, #ff0000, #8b0000);"></span>
+            <span (click)="addFunction(isBlack)"
+              style=" flex: 1; height: 100%; background: linear-gradient(135deg, #333, #000);"></span>
+          </div>
+        </th>
+        <th class="fondo_table2 split-cell">
+          <div class="split-content">
+            <span (click)="addFunction(isOdd)" style="margin-left: 1.5cm;">ODD</span>
+            <div class="separator"></div>
+            <span (click)="addFunction(secondMiddle)" style="margin-left: 0.5cm;">19 - 36</span>
+          </div>
+        </th>
       </tr>
     </table>
-    <button (click)="addFunction(isZero)">prueba</button>
+    <button (click)="newGame()" class="spin-button">
+      GIRAR RULETA
+    </button>
   </div>
 </div>
