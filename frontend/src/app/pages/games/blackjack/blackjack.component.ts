@@ -201,6 +201,10 @@ export class BlackJackComponent implements OnInit {
       this.mensajeResultado = 'Lo siento, perdiste contra la computadora.';
       // No se realiza ningún ingreso ni modificación del balance en este caso
 
+    } else if (ganador === 'excede') {
+      this.mensajeResultado = 'Excediste el límite de 21. La computadora gana.';
+      // No se realiza ningún ingreso ni modificación del balance en este caso
+
     } else if (ganador === 'empate') {
       this.mensajeResultado = 'Es un empate.';
 
@@ -248,6 +252,8 @@ export class BlackJackComponent implements OnInit {
     if (this.mensajeResultado.includes('Ganaste')) {
       this.reproducirSonido('assets/sonidos/win.mp3'); // Sonido de victoria
     } else if (this.mensajeResultado.includes('perdiste')) {
+      this.reproducirSonido('assets/sonidos/lose.mp3');1
+    } else if (this.mensajeResultado.includes('Excediste')) {
       this.reproducirSonido('assets/sonidos/lose.mp3'); // Sonido de derrota
     } else if (this.mensajeResultado.includes('empate')) {
       this.reproducirSonido('assets/sonidos/draw.mp3'); // Sonido de empate
@@ -269,7 +275,7 @@ export class BlackJackComponent implements OnInit {
   private determinarGanador(puntosJuego: number, puntosComputadora: number): string {
     // Si el jugador se pasa de 21, la computadora gana
     if (puntosJuego > 21) {
-      return 'computadora';
+      return 'excede';
     }
   
     // Si la computadora se pasa de 21, el jugador gana
