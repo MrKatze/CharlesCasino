@@ -15,38 +15,45 @@ export const getEgresos = async (req: Request, res: Response, next: NextFunction
 
 // Crear un nuevo egreso
 export const createEgreso = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const connection = await pool.getConnection();
-    try {
-      const { id_usuario, monto, metodo, fecha, hora }: Egreso = req.body;
-  
-      // Iniciar la transacción
-      await connection.beginTransaction();
-  
-      // Insertar el nuevo egreso
-      const [result] = await connection.query(
-        'INSERT INTO Egreso (id_usuario, monto, metodo, fecha, hora) VALUES (?, ?, ?, ?, ?)',
-        [id_usuario, monto, metodo, fecha, hora]
-      );
-  
-      // Restar el monto al saldo del usuario
-      await connection.query(
-        'UPDATE Usuario SET puntos = puntos - ? WHERE id_usuario = ?',
-        [monto, id_usuario]
-      );
-  
-      // Confirmar la transacción
-      await connection.commit();
-  
-      res.status(201).json({ id_egreso: (result as any).insertId, ...req.body });
-    } catch (error) {
-      // Revertir en caso de error
-      await connection.rollback();
-      console.error("❌ Error al crear egreso:", error);
-      res.status(500).json({ error: "Error al crear egreso" });
-    } finally {
-      connection.release();
+  const connection = await pool.getConnection();
+  try {
+    const { id_usuario, monto, metodo, fecha, hora }: Egreso = req.body;
+
+    // Validar que todos los campos requeridos están presentes
+    if (!id_usuario || !monto || !metodo || !fecha || !hora) {
+      res.status(400).json({ error: "Todos los campos son obligatorios: id_usuario, monto, metodo, fecha, hora" });
+      return;
     }
-  };
+
+    // Iniciar transacción
+    await connection.beginTransaction();
+
+    // Insertar el egreso
+    const [result] = await connection.query(
+      'INSERT INTO Egreso (id_usuario, monto, metodo, fecha, hora) VALUES (?, ?, ?, ?, ?)',
+      [id_usuario, monto, metodo, fecha, hora]
+    );
+
+    // Actualizar puntos del usuario
+    await connection.query(
+      'UPDATE Usuario SET puntos = puntos - ? WHERE id_usuario = ?',
+      [monto, id_usuario]
+    );
+
+    // Confirmar transacción
+    await connection.commit();
+
+    res.status(201).json({ id_egreso: (result as any).insertId, ...req.body });
+  } catch (error) {
+    // Revertir en caso de error
+    await connection.rollback();
+    console.error("❌ Error al crear egreso:", error);
+    res.status(500).json({ error: "Error al crear egreso" });
+  } finally {
+    connection.release();
+  }
+};
+
 
 // Obtener un egreso por su ID
 export const getEgresoById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -87,23 +94,31 @@ export const getEgresosByUserID = async (req: Request, res: Response, next: Next
 export const updateEgreso = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
-    const { id_usuario, monto, metodo, fecha,hora }: Egreso = req.body;
+    const { id_usuario, monto, metodo, fecha, hora }: Egreso = req.body;
 
     const [result] = await pool.query(
       'UPDATE Egreso SET id_usuario = ?, monto = ?, metodo = ?, fecha = ?, hora = ? WHERE id_egreso = ?',
       [id_usuario, monto, metodo, fecha, hora, id]
     );
 
+    // Si no se afectaron filas, significa que el egreso no existe
     if ((result as any).affectedRows === 0) {
       res.status(404).json({ error: "Egreso no encontrado" });
+      return; // Detener la ejecución aquí
     }
 
-    res.json({ id_egreso: id, id_usuario, monto, metodo, fecha, hora });
+    // Respuesta si la actualización fue exitosa
+    res.status(200).json({ id_egreso: id, id_usuario, monto, metodo, fecha, hora });
   } catch (error) {
     console.error("❌ Error al actualizar egreso:", error);
-    res.status(500).json({ error: "Error al actualizar egreso" });
+
+    // Enviar respuesta de error solo si no se han enviado encabezados
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Error al actualizar egreso" });
+    }
   }
 };
+
 
 // Eliminar un egreso
 export const deleteEgreso = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -111,13 +126,21 @@ export const deleteEgreso = async (req: Request, res: Response, next: NextFuncti
     const { id } = req.params;
     const [result] = await pool.query('DELETE FROM Egreso WHERE id_egreso = ?', [id]);
 
+    // Verifica si el egreso fue encontrado y eliminado
     if ((result as any).affectedRows === 0) {
       res.status(404).json({ error: "Egreso no encontrado" });
+      return; // Detener la ejecución después de enviar la respuesta
     }
 
-    res.json({ message: "Egreso eliminado correctamente" });
+    // Responder si la eliminación fue exitosa
+    res.status(200).json({ message: "Egreso eliminado correctamente" });
   } catch (error) {
     console.error("❌ Error al eliminar egreso:", error);
-    res.status(500).json({ error: "Error al eliminar egreso" });
+
+    // Asegura que no se envíen múltiples respuestas
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Error al eliminar egreso" });
+    }
   }
 };
+

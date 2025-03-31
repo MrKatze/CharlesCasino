@@ -29,26 +29,27 @@ describe('Pruebas del servicio createIngreso', () => {
     it('Debe crear un ingreso correctamente y actualizar los puntos del usuario', async () => {
         const newIngreso = {
             id_usuario: 1,
-            monto: 50,
+            monto: 100,
             metodo: 'tarjeta',
-            fecha: '2025-03-24'
+            fecha: '2025-03-24',
+            hora: '12:30:00' // Campo obligatorio agregado
         };
-
+    
         // Realiza la solicitud POST para crear el ingreso
         const response = await supertest(server)
-            .post('/api/ingreso')
+            .post('/api/ingresos/')
             .send(newIngreso);
-
+    
         // Verifica la respuesta del servidor
         expect(response.status).to.equal(201); // Código de estado creado
-        expect(response.body).to.include.keys('id_ingreso', 'id_usuario', 'monto', 'metodo', 'fecha');
+        expect(response.body).to.include.keys('id_ingreso', 'id_usuario', 'monto', 'metodo', 'fecha', 'hora');
         expect(response.body.monto).to.equal(newIngreso.monto);
-
+    
         // Verifica que los puntos del usuario se hayan actualizado correctamente
         const [updatedUser] = await pool.query('SELECT puntos FROM Usuario WHERE id_usuario = ?', [1]);
-        expect(updatedUser[0].puntos).to.equal(150); // 100 + 50 = 150
+        expect(updatedUser[0].puntos).to.equal(200); // 100 + 100 = 200
     });
-
+    
     // Limpia los datos después de cada caso de prueba
     afterEach(async () => {
         await pool.query('DELETE FROM Usuario WHERE id_usuario = 1');

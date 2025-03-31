@@ -19,13 +19,19 @@ export const createIngreso = async (req: Request, res: Response, next: NextFunct
   try {
     const { id_usuario, monto, metodo, fecha, hora }: Ingreso = req.body;
 
+    // Validar que se envían todos los campos obligatorios
+    if (!id_usuario || !monto || !metodo || !fecha || !hora) {
+      res.status(400).json({ error: "Todos los campos son obligatorios: id_usuario, monto, metodo, fecha, hora" });
+      return;
+    }
+
     // Iniciar la transacción
     await connection.beginTransaction();
 
     // Insertar el nuevo ingreso
     const [result] = await connection.query(
-      'INSERT INTO Ingreso (id_usuario, monto, metodo, fecha, hora) VALUES (?, ?, ?, ?,?)',
-      [id_usuario, monto, metodo, fecha,hora]
+      'INSERT INTO Ingreso (id_usuario, monto, metodo, fecha, hora) VALUES (?, ?, ?, ?, ?)',
+      [id_usuario, monto, metodo, fecha, hora]
     );
 
     // Actualizar el saldo del usuario
@@ -47,6 +53,7 @@ export const createIngreso = async (req: Request, res: Response, next: NextFunct
     connection.release();
   }
 };
+
 
 
 // Obtener un ingreso por su ID
@@ -95,16 +102,24 @@ export const updateIngreso = async (req: Request, res: Response, next: NextFunct
       [id_usuario, monto, metodo, fecha, id]
     );
 
+    // Si no se afectaron filas, significa que el ingreso no existe
     if ((result as any).affectedRows === 0) {
       res.status(404).json({ error: "Ingreso no encontrado" });
+      return; // Detiene la ejecución aquí
     }
 
-    res.json({ id_ingreso: id, id_usuario, monto, metodo, fecha });
+    // Respuesta si la actualización fue exitosa
+    res.status(200).json({ id_ingreso: id, id_usuario, monto, metodo, fecha });
   } catch (error) {
     console.error("❌ Error al actualizar ingreso:", error);
-    res.status(500).json({ error: "Error al actualizar ingreso" });
+
+    // Manejo de errores inesperados, evitando múltiples respuestas
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Error al actualizar ingreso" });
+    }
   }
 };
+
 
 // Eliminar un ingreso
 export const deleteIngreso = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -112,13 +127,21 @@ export const deleteIngreso = async (req: Request, res: Response, next: NextFunct
     const { id } = req.params;
     const [result] = await pool.query('DELETE FROM Ingreso WHERE id_ingreso = ?', [id]);
 
+    // Verifica si se eliminó algún registro
     if ((result as any).affectedRows === 0) {
       res.status(404).json({ error: "Ingreso no encontrado" });
+      return; // Detener el flujo aquí
     }
 
-    res.json({ message: "Ingreso eliminado correctamente" });
+    // Respuesta si la eliminación fue exitosa
+    res.status(200).json({ message: "Ingreso eliminado correctamente" });
   } catch (error) {
     console.error("❌ Error al eliminar ingreso:", error);
-    res.status(500).json({ error: "Error al eliminar ingreso" });
+
+    // Enviar una respuesta de error solo si no se ha enviado previamente
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Error al eliminar ingreso" });
+    }
   }
 };
+

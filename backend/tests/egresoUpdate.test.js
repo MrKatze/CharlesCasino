@@ -43,7 +43,7 @@ describe('Pruebas del servicio updateEgreso', () => {
 
         // Realiza la solicitud PUT para actualizar el egreso
         const response = await supertest(server)
-            .put(`/api/egreso/${idEgreso}`)
+            .put(`/api/egresos/${idEgreso}`)
             .send(updatedEgreso);
 
         // Verifica la respuesta del servidor
@@ -63,7 +63,7 @@ describe('Pruebas del servicio updateEgreso', () => {
         };
 
         const response = await supertest(server)
-            .put('/api/egreso/999999') // ID que no existe
+            .put('/api/egresos/999999') // ID que no existe
             .send(updatedEgreso);
 
         // Verifica la respuesta del servidor

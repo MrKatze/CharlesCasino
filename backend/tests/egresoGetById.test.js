@@ -43,7 +43,7 @@ describe('Pruebas del servicio getEgresoById', () => {
         expect(response.status).to.equal(200);
         expect(response.body).to.include.keys('id_egreso', 'id_usuario', 'monto', 'metodo', 'fecha');
         expect(response.body.id_egreso).to.equal(idEgreso);
-        expect(response.body.monto).to.equal(500);
+        expect(Number(response.body.monto)).to.equal(500);
         expect(response.body.metodo).to.equal('efectivo');
     });
 

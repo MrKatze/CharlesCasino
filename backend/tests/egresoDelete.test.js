@@ -32,10 +32,14 @@ describe('Pruebas del servicio deleteEgreso', () => {
     it('Debe eliminar un egreso correctamente', async () => {
         // Obtén el ID del egreso que se insertó
         const [egreso] = await pool.query('SELECT id_egreso FROM Egreso WHERE id_usuario = ?', [1]);
+
+        // Verifica que se haya insertado un egreso
+        expect(egreso.length).to.be.greaterThan(0);
+
         const idEgreso = egreso[0].id_egreso;
 
         // Realiza la solicitud DELETE para eliminar el egreso
-        const response = await supertest(server).delete(`/api/egreso/${idEgreso}`);
+        const response = await supertest(server).delete(`/api/egresos/${idEgreso}`);
 
         // Verifica la respuesta del servidor
         expect(response.status).to.equal(200);

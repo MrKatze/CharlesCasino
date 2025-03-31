@@ -31,18 +31,20 @@ describe('Pruebas del servicio createEgreso', () => {
             id_usuario: 1,
             monto: 200,
             metodo: 'tarjeta',
-            fecha: '2025-03-24'
+            fecha: '2025-03-24',
+            hora: '12:30:00' // Campo obligatorio agregado
         };
 
         // Realiza la solicitud POST para crear el egreso
         const response = await supertest(server)
-            .post('/api/egreso')
+            .post('/api/egresos/')
             .send(newEgreso);
 
         // Verifica la respuesta del servidor
         expect(response.status).to.equal(201);
-        expect(response.body).to.include.keys('id_egreso', 'id_usuario', 'monto', 'metodo', 'fecha');
+        expect(response.body).to.include.keys('id_egreso', 'id_usuario', 'monto', 'metodo', 'fecha', 'hora');
         expect(response.body.monto).to.equal(newEgreso.monto);
+        expect(response.body.hora).to.equal(newEgreso.hora);
 
         // Verifica que los puntos del usuario se hayan actualizado correctamente
         const [updatedUser] = await pool.query('SELECT puntos FROM Usuario WHERE id_usuario = ?', [1]);
