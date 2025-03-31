@@ -298,4 +298,6 @@ export class RuletaComponent {
     // Función vacía para evitar errores de referencia  
     // Puedes dejarla vacía o agregar un mensaje de error si lo prefieres
   }
+
+
 }

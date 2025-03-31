@@ -1,6 +1,6 @@
 <div class="sidebar-container">
   <div class="sidebar">
-    <a routerLink="/dashboard">
+    <a (click)="goToDashboard()">
       <span class="icon"><i class="fas fa-home"></i></span>
       <span class="text">Principal</span>
     </a>
@@ -28,7 +28,7 @@
 
   <div class="content">
     <div class="card-container">
-      <h2>🎰 Tragaperras 🎰</h2>
+      <h2>🎰 Tragamonedas 🎰</h2>
       <p class="puntos-usuario">Tus puntos: {{ puntosActuales }}</p>
 
       <div class="slot-machine">

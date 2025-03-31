@@ -35,7 +35,7 @@ describe('Pruebas del servicio deleteIngreso', () => {
         const idIngreso = ingreso[0].id_ingreso;
 
         // Realiza la solicitud DELETE para eliminar el ingreso
-        const response = await supertest(server).delete(`/api/ingreso/${idIngreso}`);
+        const response = await supertest(server).delete(`/api/ingresos/${idIngreso}`);
 
         // Verifica la respuesta del servidor
         expect(response.status).to.equal(200);
@@ -48,7 +48,7 @@ describe('Pruebas del servicio deleteIngreso', () => {
     });
 
     it('Debe devolver un error 404 si el ingreso no existe', async () => {
-        const response = await supertest(server).delete('/api/ingreso/999999'); // ID que no existe
+        const response = await supertest(server).delete('/api/ingresos/999999'); // ID que no existe
 
         // Verifica la respuesta del servidor
         expect(response.status).to.equal(404);

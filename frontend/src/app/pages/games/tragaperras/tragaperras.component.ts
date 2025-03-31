@@ -130,6 +130,10 @@ export class TragaperrasComponent implements OnInit {
     }, 3500);
   }
 
+  goToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
   irAPerfil() { this.router.navigate(['/account']); }
   
   irTiendaPuntos() { this.router.navigate(['/points_shop']); }

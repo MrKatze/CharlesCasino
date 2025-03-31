@@ -75,6 +75,10 @@ export class AnunciosComponent {
         });
     }
 
+    goToDashboard() {
+        this.router.navigate(['/dashboard']);
+      }
+
     irAPerfil() {
         this.router.navigate(['/account']);
     }
